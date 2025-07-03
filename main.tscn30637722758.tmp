@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://peahgkuwo1ay"]
+
+[ext_resource type="Script" uid="uid://b6ccpv5mw5g8j" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://db4s5ubeakf8c" path="res://scenes/board.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dscuuujyrsiew" path="res://scenes/dice.tscn" id="3_1bvp3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0xm2m")
+
+[node name="MainScreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1300.0
+offset_bottom = 1000.0
+
+[node name="AspectMenu" type="AspectRatioContainer" parent="MainScreen"]
+clip_contents = true
+layout_mode = 1
+offset_right = 1000.0
+offset_bottom = 1000.0
+
+[node name="Board" parent="MainScreen/AspectMenu" instance=ExtResource("2_h2yge")]
+layout_mode = 2
+
+[node name="SideMenu" type="Panel" parent="MainScreen"]
+layout_mode = 0
+offset_left = 1000.0
+offset_right = 1300.0
+offset_bottom = 1000.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
+
+[node name="Dice" parent="MainScreen/SideMenu" instance=ExtResource("3_1bvp3")]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 731.0
+offset_right = 367.0
+offset_bottom = 1015.0
+scale = Vector2(0.5, 0.5)
+
+[node name="PiecesContainer" type="Node2D" parent="."]
+
+[connection signal="pressed" from="MainScreen/SideMenu/Dice" to="." method="_on_dice_pressed"]

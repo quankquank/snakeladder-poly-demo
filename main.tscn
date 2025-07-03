@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://peahgkuwo1ay"]
+[gd_scene load_steps=10 format=3 uid="uid://peahgkuwo1ay"]
 
 [ext_resource type="Script" uid="uid://b6ccpv5mw5g8j" path="res://scripts/main.gd" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://cdgh1co34hxf7" path="res://assets/board_cropped.jpg" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://db4s5ubeakf8c" path="res://scenes/board.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dscuuujyrsiew" path="res://scenes/dice.tscn" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://c8yo4utnmti8r" path="res://assets/pawn_green.png" id="3_272bh"]
+[ext_resource type="Texture2D" uid="uid://ck6nqij4cj0fu" path="res://assets/pawn_blue.png" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://cmnlwkdx0nuux" path="res://assets/pawn_red.png" id="4_5vw27"]
+[ext_resource type="Texture2D" uid="uid://cbn20q8axwqrm" path="res://assets/pawn_yellow.png" id="5_kek77"]
+[ext_resource type="Texture2D" uid="uid://dioltvhp63iwk" path="res://assets/title.png" id="8_5vw27"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
+current_turn_icon = Array[Texture]([ExtResource("4_1bvp3"), ExtResource("3_272bh"), ExtResource("4_5vw27"), ExtResource("5_kek77")])
 
 [node name="MainScreen" type="Control" parent="."]
 layout_mode = 3
@@ -15,13 +22,13 @@ offset_right = 1300.0
 offset_bottom = 1000.0
 
 [node name="AspectMenu" type="AspectRatioContainer" parent="MainScreen"]
+clip_contents = true
 layout_mode = 1
 offset_right = 1000.0
 offset_bottom = 1000.0
 
-[node name="Board" type="TextureRect" parent="MainScreen/AspectMenu"]
+[node name="Board" parent="MainScreen/AspectMenu" instance=ExtResource("2_h2yge")]
 layout_mode = 2
-texture = ExtResource("3_h2yge")
 
 [node name="SideMenu" type="Panel" parent="MainScreen"]
 layout_mode = 0
@@ -29,3 +36,64 @@ offset_left = 1000.0
 offset_right = 1300.0
 offset_bottom = 1000.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_h2yge")
+
+[node name="MoveLog" type="RichTextLabel" parent="MainScreen/SideMenu"]
+visibility_layer = 3
+layout_mode = 0
+offset_left = 11.0
+offset_top = 314.0
+offset_right = 287.0
+offset_bottom = 501.0
+theme_override_colors/table_border = Color(0, 0, 0, 1)
+bbcode_enabled = true
+scroll_following = true
+
+[node name="Dice" parent="MainScreen/SideMenu" instance=ExtResource("3_1bvp3")]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 731.0
+offset_right = 367.0
+offset_bottom = 1015.0
+scale = Vector2(0.5, 0.5)
+
+[node name="PlayerText" type="Label" parent="MainScreen/SideMenu"]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 524.0
+offset_right = 237.0
+offset_bottom = 547.0
+text = "Current turn:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentTurnIcon" type="TextureRect" parent="MainScreen/SideMenu"]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 555.0
+offset_right = 176.0
+offset_bottom = 642.0
+texture = ExtResource("4_1bvp3")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="MainScreen/SideMenu"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 937.0
+offset_right = 271.0
+offset_bottom = 986.0
+action_mode = 0
+text = "Restart"
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/SideMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 291.0
+offset_bottom = 188.0
+texture = ExtResource("8_5vw27")
+expand_mode = 1
+
+[node name="PiecesContainer" type="Node2D" parent="."]
+
+[connection signal="pressed" from="MainScreen/SideMenu/Dice" to="." method="_on_dice_pressed"]
+[connection signal="pressed" from="MainScreen/SideMenu/Button" to="." method="_on_restart_button_pressed"]

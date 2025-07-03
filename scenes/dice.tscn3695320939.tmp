@@ -9,12 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://b48l7oomubsp7" path="res://assets/dice_6.png" id="7_4kp1s"]
 
 [node name="Dice" type="Button"]
-offset_right = 284.0
-offset_bottom = 283.0
-size_flags_vertical = 8
 script = ExtResource("1_pb8pk")
 dice_faces = Array[Texture]([ExtResource("2_ocjtb"), ExtResource("3_dicg2"), ExtResource("4_pgf55"), ExtResource("5_dlvbc"), ExtResource("6_skxya"), ExtResource("7_4kp1s")])
 
 [node name="Faces" type="Sprite2D" parent="."]
-position = Vector2(142, 141)
 texture = ExtResource("2_ocjtb")

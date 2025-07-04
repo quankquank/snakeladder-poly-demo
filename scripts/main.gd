@@ -52,6 +52,7 @@ func move_player(steps: int):
 	if board.jumps.has(end):
 		start = end
 		end = board.jumps[end]
+		player_nodes[current_player].move_to_tile(end)
 		if start < end:
 			log_move(current_player, start, end, steps, "ladder")
 		else:
